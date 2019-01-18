@@ -1,1 +1,5 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(65,5): error MSB8020: The build tools for Visual Studio 2010 (Platform Toolset = 'v100') cannot be found. To build using the v100 build tools, please install Visual Studio 2010 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  Building Custom Rule E:/Dropbox/Projects/amcp/CMakeLists.txt
+  CMake does not need to re-run because E:/Dropbox/Projects/amcp/msvc/CMakeFiles/generate.stamp is up-to-date.
+  amcp.c
+     Creating library E:/Dropbox/Projects/amcp/msvc/Release/amcp.lib and object E:/Dropbox/Projects/amcp/msvc/Release/amcp.exp
+  amcp.vcxproj -> E:\Dropbox\Projects\amcp\msvc\Release\amcp.dll
