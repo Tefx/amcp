@@ -1,0 +1,82 @@
+from inspect import signature, Signature
+
+from .amcp_type import DataType
+
+CCODE_TEMPLATE_SIGNATURE = "{ret} {name}({args})"
+CCODE_TEMPLATE_DEFINITION = """pm_type _pm[] = {{{args}}};
+    signature ps = {{"{name}", {num_args}, _pm, {ret}}};"""
+CCODE_TEMPLATE_BODY = """{ret} ret;
+    rpc_call({var_ac}, &ps, &ret, {args});"""
+CCODE_TEMPLATE_BODY_NO_RET = """rpc_call({var_ac}, &ps, NULL, {args});"""
+CCODE_TEMPLATE_RETURN = """return ret;"""
+CCODE_TEMPLATE_RETURN_VOID = """return;"""
+CCODE_TEMPLATE_FUNCTION = """{sig}{{
+    {dfi}
+    {body}
+    {ret}
+}}
+"""
+
+
+class RemoteFunction:
+    def __init__(self, func):
+        self.func = func
+        self.name = func.__name__
+        self.obj = None
+        self.sig = signature(func)
+        self.arg_types = self.mark_refs()
+
+        ret_sig = self.sig.return_annotation
+        if ret_sig == self.sig.empty:
+            self.sig = self.sig.replace(return_annotation=DataType.VOID)
+        self.ret_type = self.sig.return_annotation.value.pdef
+
+    def mark_refs(self):
+        refs = []
+        k = 0
+        for name, p in self.sig.parameters.items():
+            if name not in ("self", "cls"):
+                if p.annotation.value.ref:
+                    refs.append(k)
+                k += 1
+        return refs
+
+    def set_obj(self, obj):
+        self.obj = obj
+        return self
+
+    def call_and_pack(self, args):
+        ret = self.func(self.obj, *args)
+        if self.ret_type is not None:
+            ret = [self.ret_type(ret)]
+        else:
+            ret = [ret]
+        ret.extend(args[i] for i in self.arg_types)
+        return ret
+
+    def __call__(self, *args, **kwargs):
+        return self.func(self.obj, *args, **kwargs)
+
+    def ccode(self, var_ac):
+        args = [p for name, p in self.sig.parameters.items() if name not in ("self", "cls")]
+        c_sig = CCODE_TEMPLATE_SIGNATURE.format(
+            ret=self.sig.return_annotation.value.cdef,
+            name="{}_{}".format(self.obj.__class__.__name__.lower(), self.name),
+            args=", ".join("{} {}".format(p.annotation.value.cdef, p.name) for p in args))
+        c_def = CCODE_TEMPLATE_DEFINITION.format(
+            name=self.name,
+            args=", ".join(p.annotation.value.name for p in args),
+            num_args=len(args),
+            ret=self.sig.return_annotation.value.name)
+        if self.ret_type is not None:
+            c_body = CCODE_TEMPLATE_BODY.format(
+                var_ac=var_ac,
+                ret=self.sig.return_annotation.value.cdef,
+                args=", ".join(p.name for p in args))
+            c_ret = CCODE_TEMPLATE_RETURN.format()
+        else:
+            c_body = CCODE_TEMPLATE_BODY_NO_RET.format(
+                var_ac=var_ac,
+                args=", ".join(p.name for p in args))
+            c_ret = CCODE_TEMPLATE_RETURN_VOID
+        return CCODE_TEMPLATE_FUNCTION.format(sig=c_sig, dfi=c_def, body=c_body, ret=c_ret)
