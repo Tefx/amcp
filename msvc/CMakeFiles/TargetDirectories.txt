@@ -1,0 +1,4 @@
+E:/Dropbox/Projects/amcp/msvc/CMakeFiles/amcp.dir
+E:/Dropbox/Projects/amcp/msvc/CMakeFiles/test.dir
+E:/Dropbox/Projects/amcp/msvc/CMakeFiles/ALL_BUILD.dir
+E:/Dropbox/Projects/amcp/msvc/CMakeFiles/ZERO_CHECK.dir

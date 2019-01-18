@@ -1,14 +1,1 @@
-﻿  Checking Build System
-  CMake is re-running because generate.stamp.list is missing.
-  -- Building for: Visual Studio 15 2017
-  -- Selecting Windows SDK version 10.0.17763.0 to target Windows 10.0.17134.
-  -- The C compiler identification is MSVC 19.16.27026.1
-  -- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/cl.exe
-  -- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/cl.exe -- works
-  -- Detecting C compiler ABI info
-  -- Detecting C compiler ABI info - done
-  -- Detecting C compile features
-  -- Detecting C compile features - done
-  -- Configuring done
-  -- Generating done
-  -- Build files have been written to: E:/Dropbox/Projects/amcp/msvc
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(65,5): error MSB8020: The build tools for Visual Studio 2010 (Platform Toolset = 'v100') cannot be found. To build using the v100 build tools, please install Visual Studio 2010 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
