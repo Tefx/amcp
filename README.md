@@ -30,7 +30,7 @@ Invoking python code in AutoMod using RPC
   The method decorated by `RemoteFunction` will be invokable from AutoMod. Data types currently supported: `VOID`, `INT`, `INT_REF`, `REAL`, `REAL_REF`, `STR` and `STR_REF`. `*_REF` are reference types which can be modified inside the functions (like pointers in C). In Python code, the referred values are accessed by `v[0]`. For example:
   ```Python
   @RemoteFunction
-  def iadd(self, a: dt.Int, i: dt.Int) -> dt.VOID:
+  def iadd(self, a: dt.INT_REF, i: dt.INT) -> dt.VOID:
       a[0] += i
   ```
   for which the corresponding C function signature will be `void test_iadd(int32_t* a, int32_t i);`.
