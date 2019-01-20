@@ -8,6 +8,7 @@ Invoking python from AutoMod using RPC
   copy bin/*.dll to $ASI/bin
   copy bin/*.lib to $ASI/lib
   ```
+  where `$ASI` is the AutoMod install path.
 
 ## Example
 
@@ -31,7 +32,7 @@ Invoking python from AutoMod using RPC
   ```Python
   test_server.gen_c(path=None)
   ```
-  will generate C code similar as follows. 
+  will generate C code similar to the following. 
   ```C
   #include <amcp.h>
 
@@ -60,9 +61,9 @@ Invoking python from AutoMod using RPC
   test_server.serve_forever("tcp://*:5555")
   ```
 
-  Note that this module uses [ZeroMQ](http://zeromq.org/) and underlying network library. Thus, any *endpoint* supported by ZeroMQ is acceptable as listen address. **The server and AutoMod executable need not be on the same host.**. Refer to http://api.zeromq.org/4-2:zmq-bind for more info.
+  Note that this module uses [ZeroMQ](http://zeromq.org/) as the underlying network library. Thus, any *endpoint* supported by ZeroMQ is acceptable as listening address. **The server and AutoMod executable need not be on the same host.** Refer to http://api.zeromq.org/4-2:zmq-bind for more info.
 
-  We can also use `test.gen_c(path="./")` to directly write the code to `./test_gen.c` (or `test.gen_c(path="./", header=True)`) to write the code to `./test_gen.h`. 
+  We can also use `test.gen_c(path="./")` to directly write the code to `./test_gen.c` (or `test.gen_c(path="./", header=True)` to write the code to `./test_gen.h`). 
 
   ### Step 3: Include the generated C source and declear the functions in AutoMod
   ### Step 4: Connect the server in `model initialization` or `model ready` function
