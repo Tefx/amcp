@@ -1,5 +1,5 @@
 # amcp
-Invoking python from AutoMod using RPC
+Invoking python code in AutoMod using RPC
 
 ## Installation
 
