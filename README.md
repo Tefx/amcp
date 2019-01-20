@@ -3,11 +3,11 @@ Invoking python from AutoMod using RPC
 
 ## Installation
 
-```
+  ```
   copy include/*.h to $ASI/include
   copy bin/*.dll to $ASI/bin
   copy bin/*.lib to $ASI/lib
-```
+  ```
 
 ## Example
 
