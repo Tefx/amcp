@@ -14,7 +14,7 @@ Invoking python code in AutoMod using RPC
 
 ## Example
 
-  ### Step 1: Define functions in Python 
+### Step 1: Define functions in Python 
 
   ```Python
   from amcp import RemoteFunction, DataType as dt, AMCPEngine
@@ -35,7 +35,7 @@ Invoking python code in AutoMod using RPC
   ```
   for which the corresponding C function signature will be `void test_iadd(int32_t* a, int32_t i);`.
   
-  ### Step 2: Generate C code
+### Step 2: Generate C code
 
   ```Python
   test_server.gen_c(path=None)
@@ -73,8 +73,8 @@ Invoking python code in AutoMod using RPC
 
   We can also use `test.gen_c(path="./")` to directly write the code to `./test_gen.c` (or `test.gen_c(path="./", header=True)` to write the code to `./test_gen.h`). 
 
-  ### Step 3: Include the generated C source and declear the functions in AutoMod
-  ### Step 4: Connect the server in `model initialization` or `model ready` function
+### Step 3: Include the generated C source and declear the functions in AutoMod
+### Step 4: Connect the server in `model initialization` or `model ready` function
   ```
   begin model initialization function
     return test_amcp_connect("tcp://{server-ip}:5555")
@@ -82,7 +82,7 @@ Invoking python code in AutoMod using RPC
   ```
   Again, the connecting address is a *ZeroMQ endpoint*.
 
-  ### Step 5: Then, we can directly call `test_time_delta` from AutoMod source:
+### Step 5: Then, we can directly call `test_time_delta` from AutoMod source:
   ```
   begin P_test arriving
     while 1=1 do begin
@@ -92,7 +92,7 @@ Invoking python code in AutoMod using RPC
   end
   ```
 
-  ### Step 6: Close the connection in `model finished` function
+### Step 6: Close the connection in `model finished` function
   ```
   begin model finished function
     return test_amcp_close()
