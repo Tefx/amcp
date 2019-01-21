@@ -1,4 +1,5 @@
-from collections.__init__ import namedtuple
+from builtins import str
+from collections import namedtuple
 from enum import Enum
 
 _DTItem = namedtuple("DataTypeItem", "cdef, pdef, name, ref")

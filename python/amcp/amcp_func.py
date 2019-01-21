@@ -1,5 +1,4 @@
-from inspect import signature, Signature
-
+from inspect import signature
 from .amcp_type import DataType
 
 CCODE_TEMPLATE_SIGNATURE = "{ret} {name}({args})"

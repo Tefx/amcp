@@ -1,14 +1,14 @@
 # amcp
 Invoking python code in AutoMod using RPC
 
-(*Currently only Python 3 is supported, since it uses Function Annotations as type hinting. Support of Python 2 will be added soon.*)
+(*Currently only Python 3 is supported since it uses Function Annotations as type hinting. Support of Python 2 will be added soon.*)
 
 ## Installation
 
   ```
-  copy include/*.h to $ASI/include
-  copy bin/*.dll to $ASI/bin
-  copy bin/*.lib to $ASI/lib
+  copy include/$ARCH/*.h to $ASI/include
+  copy bin/$ARCH/*.dll to $ASI/bin
+  copy bin/$ARCH/*.lib to $ASI/lib
   ```
   where `$ASI` is the AutoMod install path.
 

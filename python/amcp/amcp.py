@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 import zmq
 import msgpack
@@ -50,8 +52,8 @@ class AMCPEngine:
         var_ac = C_VAR_AC.format(uid=int(uuid4().time % 1e6))
         namespace = self.__class__.__name__.lower()
         buffer = C_TEMPLATE.format(
-            var_ac = var_ac,
-            cls_name = namespace,
+            var_ac=var_ac,
+            cls_name=namespace,
             functions=os.linesep.join(f.ccode(var_ac) for f in self.libs.values()))
         if path is not None:
             filename = "{}_gen.{}".format(namespace, "h" if header else "c")
