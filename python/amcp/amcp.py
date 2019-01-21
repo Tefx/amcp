@@ -3,9 +3,13 @@ from __future__ import print_function
 import os
 import zmq
 import msgpack
+from sys import version_info
 from uuid import uuid4
 
-from .amcp_func import RemoteFunction
+if version_info.major == 2:
+    from .amcp_func2 import RemoteFunction
+elif version_info.major == 3:
+    from .amcp_func import RemoteFunction
 
 C_VAR_AC = "_amcp_ctx_{uid}"
 C_TEMPLATE = """#include <amcp.h>
@@ -43,9 +47,9 @@ class AMCPEngine:
 
         while True:
             message = socket.recv()
-            func, *args = msgpack.unpackb(message)
-            ret = self.libs[func].call_and_pack(args)
-            if not silence: print("Calling", func, "Ret", ret)
+            args = msgpack.unpackb(message)
+            ret = self.libs[args[0]].call_and_pack(args[1:])
+            if not silence: print("Calling", args[0], "Ret", ret)
             socket.send(msgpack.packb(ret))
 
     def gen_c(self, path="./", header=False):

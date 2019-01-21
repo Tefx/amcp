@@ -1,7 +1,9 @@
 # amcp
 Invoking python code in AutoMod using RPC
 
-(*Currently only Python 3 is supported since it uses Function Annotations as type hinting. Support of Python 2 will be added soon.*)
+~~(*Currently only Python 3 is supported since it uses Function Annotations as type hinting. Support of Python 2 will be added soon.*)~~
+
+*Support of Python 2 is not tested.*
 
 ## Installation
 
@@ -12,12 +14,13 @@ Invoking python code in AutoMod using RPC
   ```
   where `$ASI` is the AutoMod install path. Also, add `ASILIBS=amcp.lib` in Environment Variables.
   
-  The Python module is under `python/`
+  The Python module is under `python/`. Dependencies: `pyzmq` and `msgpack`
 
 ## Example
 
 ### Step 1: Define functions in Python 
 
+  For Python 3+
   ```Python
   from amcp import RemoteFunction, DataType as dt, AMCPEngine
   import pandas as pd
@@ -29,10 +32,24 @@ Invoking python code in AutoMod using RPC
 
   test_server = Test()
   ```
-  The method decorated by `RemoteFunction` will be invokable from AutoMod. Data types currently supported: `VOID`, `INT`, `INT_REF`, `REAL`, `REAL_REF`, `STR` and `STR_REF`. `*_REF` are reference types which can be modified inside the functions (like pointers in C). In Python code, the referred values are accessed by `v[0]`. For example:
+  
+  For Python 2
+  ```Python
+  from amcp import remote, DataType as dt, AMCPEngine
+  import pandas as pd
+
+  class Test(AMCPEngine):
+      @remote([dt.INT], dt.STR)
+      def time_delta(self, ac):
+          return "Time delta is {}".format(pd.Timedelta(seconds=ac))
+
+  test_server = Test()
+  ```
+  
+  The method decorated by `RemoteFunction` (or `remote` for Python 2) will be invokable from AutoMod. Data types currently supported: `VOID`, `INT`, `INT_REF`, `REAL`, `REAL_REF`, `STR` and `STR_REF`. `*_REF` are reference types which can be modified inside the functions (like pointers in C). In Python code, the referred values are accessed by `v[0]`. For example:
   ```Python
   @RemoteFunction
-  def iadd(self, a: dt.INT_REF, i: dt.INT) -> dt.VOID:
+  def iadd(self, a: dt.INT_REF, i: dt.INT):
       a[0] += i
   ```
   for which the corresponding C function signature will be `void test_iadd(int32_t* a, int32_t i);`.
