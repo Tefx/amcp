@@ -11,6 +11,8 @@ Invoking python code in AutoMod using RPC
   copy bin/$ARCH/*.lib to $ASI/lib
   ```
   where `$ASI` is the AutoMod install path.
+  
+  The Python module is under `python/`
 
 ## Example
 
