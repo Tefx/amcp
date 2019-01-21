@@ -10,7 +10,7 @@ Invoking python code in AutoMod using RPC
   copy bin/$ARCH/*.dll to $ASI/bin
   copy bin/$ARCH/*.lib to $ASI/lib
   ```
-  where `$ASI` is the AutoMod install path.
+  where `$ASI` is the AutoMod install path. Also, add `ASILIBS=amcp.lib` in Environment Variables.
   
   The Python module is under `python/`
 
