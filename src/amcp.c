@@ -38,9 +38,10 @@ int pack_procedure(msgpack_packer *pk, signature *ps, va_list valist) {
     size_t len_body;
     msgpack_pack_array(pk, ps->pm_num + 1);
 
-    size_t len_name = strlen(ps->name);
-    msgpack_pack_str(pk, len_name);
-    msgpack_pack_str_body(pk, ps->name, len_name);
+//    size_t len_name = strlen(ps->name);
+//    msgpack_pack_str(pk, len_name);
+//    msgpack_pack_str_body(pk, ps->name, len_name);
+    msgpack_pack_int32(pk, ps->idx);
     for (int i = 0; i < ps->pm_num; ++i) {
         if (ps->pm[i] & 0b01) msgpack_pack_array(pk, 1);
         switch (ps->pm[i] & (~0b01)) {

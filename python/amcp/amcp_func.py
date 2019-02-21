@@ -1,11 +1,14 @@
+import inspect
 from inspect import signature
 from .amcp_type import DataType
+from os import linesep
 
+CCODE_TEMPLATE_DOC = "/*{sep}{{doc}}{sep}*/{sep}".format(sep=linesep)
 CCODE_TEMPLATE_SIGNATURE = "{ret} {name}({args})"
 
 CCODE_TEMPLATE_DEFINITION = """pm_type _pm[] = {{{args}}};
     signature ps = {{"{name}", {num_args}, _pm, {ret}}};"""
-CCODE_TEMPLATE_DEFINITION_NO_PM = """signature ps = {{"{name}", 0, NULL, {ret}}};"""
+CCODE_TEMPLATE_DEFINITION_NO_PM = """signature ps = {{{name}, 0, NULL, {ret}}};"""
 
 CCODE_TEMPLATE_BODY = """{ret} ret;
     rpc_call({var_ac}, &ps, &ret, {args});"""
@@ -16,7 +19,7 @@ CCODE_TEMPLATE_BODY_NO_PM_NO_RET = """rpc_call({var_ac}, &ps, NULL);"""
 
 CCODE_TEMPLATE_RETURN = """return ret;"""
 CCODE_TEMPLATE_RETURN_VOID = """return;"""
-CCODE_TEMPLATE_FUNCTION = """{sig}{{
+CCODE_TEMPLATE_FUNCTION = """{doc}{sig}{{
     {dfi}
     {body}
     {ret}
@@ -66,6 +69,11 @@ class RemoteFunction:
     def ccode(self, var_ac):
         args = [p for name, p in self.sig.parameters.items() if name not in ("self", "cls")]
 
+        if self.func.__doc__:
+            c_doc = CCODE_TEMPLATE_DOC.format(doc=inspect.cleandoc(self.func.__doc__))
+        else:
+            c_doc = ""
+
         c_sig = CCODE_TEMPLATE_SIGNATURE.format(
             ret=self.sig.return_annotation.value.cdef,
             name="{}_{}".format(self.obj.__class__.__name__.lower(), self.name),
@@ -101,4 +109,4 @@ class RemoteFunction:
             args=", ".join(p.name for p in args))
         c_ret = format_str_ret
 
-        return CCODE_TEMPLATE_FUNCTION.format(sig=c_sig, dfi=c_def, body=c_body, ret=c_ret)
+        return CCODE_TEMPLATE_FUNCTION.format(doc=c_doc, sig=c_sig, dfi=c_def, body=c_body, ret=c_ret)

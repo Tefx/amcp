@@ -1,3 +1,4 @@
+import sys; sys.path.append("../python")
 from amcp import RemoteFunction as rf, DataType as dt, AMCPEngine
 
 import pandas as pd

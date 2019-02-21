@@ -9,7 +9,8 @@ typedef int pm_type;
 typedef pm_type *pm_list;
 
 typedef struct {
-    char *name;
+//    char *name;
+    int32_t idx;
     size_t pm_num;
     pm_list pm;
     pm_type ret;

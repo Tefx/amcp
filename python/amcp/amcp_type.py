@@ -10,5 +10,5 @@ class DataType(Enum):
     INT_REF = _DTItem("int32_t*", NotImplemented, "DATA_TYPE_INTEGER_REF", True)
     REAL = _DTItem("double", float, "DATA_TYPE_REAL", False)
     REAL_REF = _DTItem("double*", NotImplemented, "DATA_TYPE_REAL_REF", True)
-    STR = _DTItem("char*", str, "DATA_TYPE_STRING", False)
+    STR = _DTItem("char*", bytes, "DATA_TYPE_STRING", False)
     STR_REF = _DTItem("char*", NotImplemented, "DATA_TYPE_STRING_REF", True)
