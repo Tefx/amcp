@@ -28,7 +28,9 @@ Invoking python code in AutoMod using RPC
   class Test(AMCPEngine):
       @RemoteFunction
       def time_delta(self, ac: dt.INT) -> dt.STR:
-          return "Time delta is {}".format(pd.Timedelta(seconds=ac))
+          # dt.STR corresponds to bytes in python
+          return "Time delta is {}".format(pd.Timedelta(seconds=ac)).encode("utf-8") 
+
 
   test_server = Test()
   ```
