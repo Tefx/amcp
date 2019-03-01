@@ -1,10 +1,13 @@
 from __future__ import print_function
 
+import gevent
 import os
-import zmq
+import zmq.green as zmq
 import msgpack
 from sys import version_info
 from uuid import uuid4
+
+gevent.get_hub().NOT_ERROR += (KeyboardInterrupt,)
 
 if version_info.major == 2:
     from .amcp_func2 import RemoteFunction
@@ -56,7 +59,6 @@ class AMCPEngine:
         socket = context.socket(zmq.REP)
         socket.bind(addr)
         self.silence = silence
-
         print("RPCSever started on {}".format(addr))
 
         try:
