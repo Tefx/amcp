@@ -8,7 +8,7 @@ CCODE_TEMPLATE_SIGNATURE = "{ret} {name}({args})"
 
 CCODE_TEMPLATE_DEFINITION = """pm_type _pm[] = {{{args}}};
     signature ps = {{{name}, {num_args}, _pm, {ret}}};"""
-CCODE_TEMPLATE_DEFINITION_NO_PM = """signature ps = {{"{name}", 0, NULL, {ret}}};"""
+CCODE_TEMPLATE_DEFINITION_NO_PM = """signature ps = {{{name}, 0, NULL, {ret}}};"""
 
 CCODE_TEMPLATE_BODY = """{ret} ret;
     rpc_call({var_ac}, &ps, &ret, {args});"""
@@ -55,7 +55,9 @@ class RemoteFunction:
         return self
 
     def call_and_pack(self, args):
+        # print(self.func.__name__)
         ret = self.func(self.obj, *args)
+        # print(self.func.__name__, "finished")
         if self.ret_type is not None:
             ret = [self.ret_type(ret)]
         else:
