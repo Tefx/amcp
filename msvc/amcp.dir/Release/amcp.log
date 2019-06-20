@@ -1,5 +1,0 @@
-﻿  Building Custom Rule E:/Dropbox/Projects/amcp/CMakeLists.txt
-  CMake does not need to re-run because E:/Dropbox/Projects/amcp/msvc/CMakeFiles/generate.stamp is up-to-date.
-  amcp.c
-     Creating library E:/Dropbox/Projects/amcp/msvc/Release/amcp.lib and object E:/Dropbox/Projects/amcp/msvc/Release/amcp.exp
-  amcp.vcxproj -> E:\Dropbox\Projects\amcp\msvc\Release\amcp.dll
